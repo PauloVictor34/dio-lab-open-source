@@ -1,0 +1,74 @@
+from itertools import count
+from time import sleep
+
+print("""Seja muito bem vindo a nossa agência!
+Esolha uma das opções abaixo:""")
+
+menu="""
+0 - Depositar
+1 - Sacar
+2 - Extrato
+3 - Sair
+"""
+opcao = 0
+saldo = 0
+extrato =""
+numero_de_saque = 0
+QT_SAQUE = 3
+limite = 500
+
+while True:
+    
+    opcao=int(input(menu))
+    
+    if opcao == 0:    
+        depo=float(input("Informe o valor que deseja depositar: "))
+        if depo > 0:
+            saldo+=depo
+            extrato += f"Depósito: R$ {depo: .2f}\n"
+            print("Deposito realizado com sucesso!")
+            sleep(1)
+        else:
+            print("Valor inválido. Tente novamente")
+        
+    elif opcao == 1:
+        saque=float(input("Informe o valor que deseja sacar: "))  
+        
+        saldo_maior = saque > saldo
+        limite_maior = saque > limite
+        saques_maior = numero_de_saque >= QT_SAQUE
+        
+        if saques_maior:
+            print("Limite de saques diarios atingidos")
+            sleep(1)
+        elif limite_maior:
+            print("O valor limite de saque é de R$ 500,00")
+            sleep(1)
+        elif saldo_maior:
+            print("Saldo insuficiente!")
+            sleep(1)
+        elif saque > 0:
+            saldo-=saque
+            extrato += f"Saque: R$ {depo: .2f}\n"
+            print("Saque realizado com sucesso!")
+            numero_de_saque += 1 
+            sleep(1)
+        else:
+            print("Valor inválido. Tente novamente")
+            
+    elif opcao == 2:
+        print("\nSegue o extrato diário: ")
+        print("Não foi feita nenhum movimentação." if not extrato else extrato)
+        print(f"\nSaldo: R$ {saldo:.2f}")
+        
+    elif opcao == 3:
+        print("Obrigado por utilizar nossos serviços! Volte sempre")
+        break
+    else:
+        print("Valor inválido. Tente novamente")
+        
+#Só é possível depositar valores positivos.
+#Todos os depositos devem ser armazenados  em uma variável e exibidos no extrato.
+#O sistema deve permitir realizar 3 saques diários com limite de no máximo 500 reais por saque. Caso o usuário não tenha saldo, exibir uma mensagem informando que está sem saldo.
+#Todos os saques devem ser armazenados  em uma variável e exibidos no extrato.
+#Extrato deve exibir o saldo atual da conta. Como R$ xxx.xx
